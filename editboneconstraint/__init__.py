@@ -18,7 +18,7 @@ site.addsitedir(vendor_dir)
 
 bl_info = {
     "name" : "Edit Bone Constraints",
-    "author" : "Loïc Pinsard",
+    "author" : "Loïc Pinsard, Alexy Long",
     "description" : "This addon lets you add constraints in the edit mode of an armature. Allowing you to have guide bones that control the placement of all the other bones of your rig.",
     "blender" : (2, 80, 0),
     "version" : (0, 0, 1),
