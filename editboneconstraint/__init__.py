@@ -13,29 +13,34 @@
 import os
 import site
 
-vendor_dir = os.path.join(os.path.dirname(__file__), 'vendor')
+vendor_dir = os.path.join(os.path.dirname(__file__), "vendor")
 site.addsitedir(vendor_dir)
 
 bl_info = {
-    "name" : "Edit Bone Constraints",
-    "author" : "Loïc Pinsard, Alexy Long",
-    "description" : "This addon lets you add constraints in the edit mode of an armature. Allowing you to have guide bones that control the placement of all the other bones of your rig.",
-    "blender" : (2, 80, 0),
-    "version" : (0, 0, 1),
-    "location" : "",
-    "warning" : "",
-    "category" : "Rigging"
+    "name": "Edit Bone Constraints",
+    "author": "Loïc Pinsard, Alexy Long",
+    "description": "This addon lets you add constraints in the edit mode of an armature. Allowing you to have guide bones that control the placement of all the other bones of your rig.",
+    "blender": (2, 80, 0),
+    "version": (0, 0, 1),
+    "location": "",
+    "warning": "",
+    "category": "Rigging",
 }
 
 import bpy
-from editboneconstraint.properties import EditBoneConstraint
-from editboneconstraint.operators import CreateConstraintOperator, EvaluateEditBoneConstraintsOperator
+from editboneconstraint.properties import EditBoneConstraintProperty
+from editboneconstraint.operators import (
+    CreateCopyTransformConstraintOperator,
+    CreateChildOfConstraintOperator,
+    EvaluateEditBoneConstraintsOperator,
+)
 
 
 classes_to_register = [
-    EditBoneConstraint,
-    CreateConstraintOperator,
-    EvaluateEditBoneConstraintsOperator
+    EditBoneConstraintProperty,
+    CreateCopyTransformConstraintOperator,
+    CreateChildOfConstraintOperator,
+    EvaluateEditBoneConstraintsOperator,
 ]
 
 
@@ -43,9 +48,9 @@ def register():
     for cls in classes_to_register:
         bpy.utils.register_class(cls)
     bpy.types.EditBone.constraints = bpy.props.CollectionProperty(
-        type=EditBoneConstraint,
-        name="Constraints",
+        type=EditBoneConstraintProperty, name="Constraints"
     )
+
 
 def unregister():
     for cls in classes_to_register:

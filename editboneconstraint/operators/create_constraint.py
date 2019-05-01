@@ -1,23 +1,37 @@
 import bpy
+from mathutils import Matrix
+from editboneconstraint.utils import flatten_matrix
 
 
-class CreateConstraintOperator(bpy.types.Operator):
-    bl_idname = "editbone.createconstraint"
-    bl_label = "Create Edit Bone Constraint"
-    constraint_type: bpy.props.EnumProperty(
-        items=[
-            ("ChildOf", "Child Of", "Child Of"),
-            ("CopyTransform", "Copy Transform", "Copy Transform"),
-            ("CopyLocation", "Copy Location", "Copy Location"),
-            ("CopyRotation", "Copy Rotation", "Copy Rotation"),
-            ("CopyScale", "Copy Scale", "Copy Scale"),
-        ]
-    )
-    constraint_target: bpy.props.StringProperty()
+class CreateCopyTransformConstraintOperator(bpy.types.Operator):
+    bl_idname = "editbone.createcopytransformconstraint"
+    bl_label = "Create Edit Bone Copy Transform Constraint"
 
     def execute(self, context):
-        bone = context.selected_bones[0]
+        target = context.selected_editable_bones[0]
+        bone = context.selected_editable_bones[1]
         constraint = bone.constraints.add()
-        constraint.name = self.constraint_type
-        constraint.type = self.constraint_type
+        constraint.name = "Copy Transform"
+        constraint.type = "CopyTransform"
+        constraint.bone = bone.name
+        constraint.target = target.name
+        return {"FINISHED"}
+
+
+class CreateChildOfConstraintOperator(bpy.types.Operator):
+    bl_idname = "editbone.createchildofconstraint"
+    bl_label = "Create Edit Bone Child Of Constraint"
+
+    def execute(self, context):
+        target = context.selected_editable_bones[0]
+        bone = context.selected_editable_bones[1]
+        constraint = bone.constraints.add()
+        constraint.name = "Child Of"
+        constraint.type = "ChildOf"
+        constraint.bone = bone.name
+        constraint.target = target.name
+
+        offset_mat = bone.matrix @ target.matrix.inverted()
+        constraint.offset = flatten_matrix(offset_mat)
+
         return {"FINISHED"}
