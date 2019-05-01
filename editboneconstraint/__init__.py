@@ -10,6 +10,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+import os
+import site
+
+vendor_dir = os.path.join(os.path.dirname(__file__), 'vendor')
+site.addsitedir(vendor_dir)
 
 bl_info = {
     "name" : "Edit Bone Constraints",
@@ -21,7 +26,6 @@ bl_info = {
     "warning" : "",
     "category" : "Rigging"
 }
-
 
 import bpy
 from editboneconstraint.properties import EditBoneConstraint
