@@ -22,6 +22,7 @@ from editboneconstraint.operators import (
     CreateChildOfConstraintOperator,
     CreateCopyTransformConstraintOperator,
     CreateCopyLocationConstraintOperator,
+    CreateCopyRotationConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 )
 from editboneconstraint.properties import EditBoneConstraintProperty
@@ -42,6 +43,7 @@ classes_to_register = [
     EditBoneConstraintProperty,
     CreateCopyTransformConstraintOperator,
     CreateCopyLocationConstraintOperator,
+    CreateCopyRotationConstraintOperator,
     CreateChildOfConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 ]

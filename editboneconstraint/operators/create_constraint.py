@@ -50,3 +50,19 @@ class CreateCopyLocationConstraintOperator(bpy.types.Operator):
         constraint.bone = bone.name
         constraint.target = target.name
         return {"FINISHED"}
+
+
+class CreateCopyRotationConstraintOperator(bpy.types.Operator):
+    bl_idname = "editbone.create_copy_rotation_constraint"
+    bl_label = "Create Edit Bone Copy Rotation Constraint"
+
+    def execute(self, context):
+        target = context.selected_editable_bones[0]
+        bone = context.selected_editable_bones[1]
+        constraint = bone.constraints.add()
+        constraint.name = "Copy Rotation"
+        constraint.type = "CopyRotation"
+        constraint.bone = bone.name
+        constraint.target = target.name
+        return {"FINISHED"}
+
