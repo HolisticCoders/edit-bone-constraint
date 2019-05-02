@@ -18,8 +18,8 @@ class CreateConstraintOperator(bpy.types.Operator):
         target = context.selected_editable_bones[0]
         bone = context.selected_editable_bones[1]
         constraint = bone.constraints.add()
-        constraint.name = "Copy Transform"
-        constraint.type = "CopyTransform"
+        constraint.name = self.constraint_name
+        constraint.type = self.constraint_type
         constraint.bone = bone.name
         constraint.target = target.name
         return {'FINISHED'}
@@ -28,7 +28,7 @@ class CreateConstraintOperator(bpy.types.Operator):
 class CreateCopyTransformConstraintOperator(CreateConstraintOperator):
     bl_idname = "editbone.create_copy_transform_constraint"
     bl_label = "Create Edit Bone Copy Transform Constraint"
-    bl_options = set()
+    bl_options = set()  # overriding the {"INTERNAL"} of the parent class
     constraint_name = "Copy Transform"
     constraint_type = "CopyTransform"
 
@@ -36,7 +36,7 @@ class CreateCopyTransformConstraintOperator(CreateConstraintOperator):
 class CreateChildOfConstraintOperator(CreateConstraintOperator):
     bl_idname = "editbone.createchildofconstraint"
     bl_label = "Create Edit Bone Child Of Constraint"
-    bl_options = set()
+    bl_options = set()  # overriding the {"INTERNAL"} of the parent class
     constraint_name = "Child Of"
     constraint_type = "ChildOf"
 
@@ -44,7 +44,7 @@ class CreateChildOfConstraintOperator(CreateConstraintOperator):
 class CreateCopyLocationConstraintOperator(CreateConstraintOperator):
     bl_idname = "editbone.create_copy_location_constraint"
     bl_label = "Create Edit Bone Copy Location Constraint"
-    bl_options = set()
+    bl_options = set()  # overriding the {"INTERNAL"} of the parent class
     constraint_name = "Copy Location"
     constraint_type = "CopyLocation"
 
@@ -52,7 +52,7 @@ class CreateCopyLocationConstraintOperator(CreateConstraintOperator):
 class CreateCopyRotationConstraintOperator(CreateConstraintOperator):
     bl_idname = "editbone.create_copy_rotation_constraint"
     bl_label = "Create Edit Bone Copy Rotation Constraint"
-    bl_options = set()
+    bl_options = set()  # overriding the {"INTERNAL"} of the parent class
     constraint_name = "Copy Rotation"
     constraint_type = "CopyRotation"
 
@@ -60,6 +60,6 @@ class CreateCopyRotationConstraintOperator(CreateConstraintOperator):
 class CreateCopyScaleConstraintOperator(CreateConstraintOperator):
     bl_idname = "editbone.create_copy_scale_constraint"
     bl_label = "Create Edit Bone Copy Scale Constraint"
-    bl_options = set()
+    bl_options = set()  # overriding the {"INTERNAL"} of the parent class
     constraint_name = "Copy Scale"
     constraint_type = "CopyScale"
