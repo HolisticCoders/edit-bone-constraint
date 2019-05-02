@@ -66,3 +66,12 @@ class CreateCopyRotationConstraintOperator(bpy.types.Operator):
         constraint.target = target.name
         return {"FINISHED"}
 
+
+class ClearConstraintOperator(bpy.types.Operator):
+    bl_idname = "editbone.clear_edit_bone_constraints"
+    bl_label = "Clear Edit Bone Constraint"
+
+    def execute(self, context):
+        for bone in context.selected_editable_bones:
+            bone.constraints.clear()
+        return {"FINISHED"}
