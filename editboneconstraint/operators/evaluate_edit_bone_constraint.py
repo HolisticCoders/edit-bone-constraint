@@ -10,7 +10,7 @@ class EvaluateEditBoneConstraintsOperator(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object.type == "ARMATURE"
+        return context.object.type == "ARMATURE" and context.object.mode == 'EDIT'
 
     def execute(self, context):
         armature = context.object.data

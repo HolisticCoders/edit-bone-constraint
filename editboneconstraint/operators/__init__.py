@@ -1,10 +1,10 @@
-from .create_constraint import (
+from .create_constraints import (
     CreateCopyTransformConstraintOperator,
     CreateCopyLocationConstraintOperator,
     CreateCopyRotationConstraintOperator,
-    ClearConstraintOperator,
     CreateChildOfConstraintOperator,
 )
+from .clear_constraints import ClearConstraintOperator
 from .evaluate_edit_bone_constraint import EvaluateEditBoneConstraintsOperator
 
 
