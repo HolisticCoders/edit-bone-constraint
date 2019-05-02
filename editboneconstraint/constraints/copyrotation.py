@@ -5,8 +5,6 @@ from mathutils import Matrix
 
 class CopyRotation(AbstractConstraint):
     def evaluate(self):
-        for i in range(10):
-            print()
         if not self.target:
             return
         armature = self.property.id_data
