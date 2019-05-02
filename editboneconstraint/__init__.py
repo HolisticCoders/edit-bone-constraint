@@ -21,6 +21,7 @@ import bpy
 from editboneconstraint.operators import (
     CreateChildOfConstraintOperator,
     CreateCopyTransformConstraintOperator,
+    CreateCopyLocationConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 )
 from editboneconstraint.properties import EditBoneConstraintProperty
@@ -40,6 +41,7 @@ bl_info = {
 classes_to_register = [
     EditBoneConstraintProperty,
     CreateCopyTransformConstraintOperator,
+    CreateCopyLocationConstraintOperator,
     CreateChildOfConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 ]

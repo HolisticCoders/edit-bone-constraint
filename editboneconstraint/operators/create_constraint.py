@@ -35,3 +35,18 @@ class CreateChildOfConstraintOperator(bpy.types.Operator):
         constraint.offset = flatten_matrix(offset_mat)
 
         return {"FINISHED"}
+
+
+class CreateCopyLocationConstraintOperator(bpy.types.Operator):
+    bl_idname = "editbone.create_copy_location_constraint"
+    bl_label = "Create Edit Bone Copy Location Constraint"
+
+    def execute(self, context):
+        target = context.selected_editable_bones[0]
+        bone = context.selected_editable_bones[1]
+        constraint = bone.constraints.add()
+        constraint.name = "Copy Location"
+        constraint.type = "CopyLocation"
+        constraint.bone = bone.name
+        constraint.target = target.name
+        return {"FINISHED"}
