@@ -18,8 +18,5 @@ class CopyRotation(AbstractConstraint):
         new_mat.translation = bone.matrix.to_translation()
         bone.matrix = new_mat
 
-        #  updating an edit bone matrix doesn't refresh the viewport automatically
-        bpy.context.area.tag_redraw()
-
 
 exported_constraints = [CopyRotation]

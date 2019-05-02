@@ -19,4 +19,8 @@ class EvaluateEditBoneConstraintsOperator(bpy.types.Operator):
             for constraint_prop in bone.constraints:
                 constraint = instanciate_constraint_from_property(constraint_prop)
                 constraint.evaluate()
+
+        # force a viewport refresh since some constraints evaluation do not trigger one
+        bpy.context.area.tag_redraw()
+
         return {"FINISHED"}
