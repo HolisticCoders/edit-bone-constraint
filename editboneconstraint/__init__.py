@@ -16,6 +16,15 @@ import site
 vendor_dir = os.path.join(os.path.dirname(__file__), "vendor")
 site.addsitedir(vendor_dir)
 
+import bpy
+
+from editboneconstraint.operators import (
+    CreateChildOfConstraintOperator,
+    CreateCopyTransformConstraintOperator,
+    EvaluateEditBoneConstraintsOperator,
+)
+from editboneconstraint.properties import EditBoneConstraintProperty
+
 bl_info = {
     "name": "Edit Bone Constraints",
     "author": "Loïc Pinsard, Alexy Long",
@@ -26,14 +35,6 @@ bl_info = {
     "warning": "",
     "category": "Rigging",
 }
-
-import bpy
-from editboneconstraint.properties import EditBoneConstraintProperty
-from editboneconstraint.operators import (
-    CreateCopyTransformConstraintOperator,
-    CreateChildOfConstraintOperator,
-    EvaluateEditBoneConstraintsOperator,
-)
 
 
 classes_to_register = [
