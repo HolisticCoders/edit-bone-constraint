@@ -55,3 +55,4 @@ def register():
 def unregister():
     for cls in classes_to_register:
         bpy.utils.unregister_class(cls)
+    del bpy.types.EditBone.constraints
