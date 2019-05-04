@@ -7,14 +7,13 @@ class CopyLocation(AbstractConstraint):
     def evaluate(self):
         if not self.target:
             return
-        armature = self.property.id_data
-        bone = armature.edit_bones[self.bone]
-        target = armature.edit_bones[self.target]
 
-        # we can't directly change the bone's matrix's translation
-        new_mat = bone.matrix.copy()
-        new_mat.translation = target.matrix.to_translation()
-        bone.matrix = new_mat
+        head_mat = Matrix.Translation(self.target.head)
+        tail_mat = Matrix.Translation(self.target.tail)
+        new_mat = head_mat.lerp(tail_mat, self.head_tail)
 
+        bone_mat = self.bone.matrix.copy()
+        bone_mat.translation = new_mat.to_translation()
+        self.bone.matrix = bone_mat
 
 exported_constraints = [CopyLocation]

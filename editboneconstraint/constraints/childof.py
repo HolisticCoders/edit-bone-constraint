@@ -7,11 +7,11 @@ class ChildOf(AbstractConstraint):
     def evaluate(self):
         if not self.target:
             return
-        armature = self.property.id_data
-        bone = armature.edit_bones[self.bone]
-        target = armature.edit_bones[self.target]
-        new_mat = self.offset @ target.matrix
-        bone.matrix = new_mat
+
+        # FIXME: For some reason Y and Z locations are swapped, X is Fine
+        new_mat = self.target.matrix @ self.offset
+        # new_mat = self.offset @ self.target.matrix
+        self.bone.matrix = new_mat
 
 
 exported_constraints = [ChildOf]

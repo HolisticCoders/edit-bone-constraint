@@ -19,14 +19,15 @@ site.addsitedir(vendor_dir)
 import bpy
 
 from editboneconstraint.operators import (
-    CreateChildOfConstraintOperator,
-    CreateCopyTransformConstraintOperator,
-    CreateCopyLocationConstraintOperator,
-    CreateCopyRotationConstraintOperator,
+    AddConstraintOperator,
+    AddConstraintWithTargetsOperator,
     ClearConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 )
+from editboneconstraint.constraints import instanciate_constraint_from_property
+from editboneconstraint.graph import sort_bones_by_constraints
 from editboneconstraint.properties import EditBoneConstraintProperty
+from .ui.constraint_stack import ConstraintStackPanel
 
 bl_info = {
     "name": "Edit Bone Constraints",
@@ -41,25 +42,71 @@ bl_info = {
 
 
 classes_to_register = [
+    # properties
     EditBoneConstraintProperty,
-    CreateCopyTransformConstraintOperator,
-    CreateCopyLocationConstraintOperator,
-    CreateCopyRotationConstraintOperator,
-    CreateChildOfConstraintOperator,
+
+    # operators
+    AddConstraintOperator,
+    AddConstraintWithTargetsOperator,
     ClearConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
+
+    # ui
+    ConstraintStackPanel,
 ]
 
 
+addon_keymaps = []
+
+
+@bpy.app.handlers.persistent
+def evaluate_constraints(*args):
+    if (
+        # bpy.context.area.type == "VIEW_3D"
+        bpy.context.active_object.type == "ARMATURE"
+        and bpy.context.object.mode == "EDIT"
+    ):
+        armature = bpy.context.object.data
+        sorted_bones = sort_bones_by_constraints(armature)
+        for bone in sorted_bones:
+            for constraint_prop in bone.constraints:
+                constraint = instanciate_constraint_from_property(constraint_prop)
+                constraint.evaluate()
+
+
 def register():
+
+    # register the classes
     for cls in classes_to_register:
         bpy.utils.register_class(cls)
+
+    # add the property to the edit bones
     bpy.types.EditBone.constraints = bpy.props.CollectionProperty(
         type=EditBoneConstraintProperty, name="Constraints"
     )
 
+    # handle the keymap
+    wm = bpy.context.window_manager
+    km = wm.keyconfigs.addon.keymaps.new(name="3D View", space_type="VIEW_3D")
+    kmi = km.keymap_items.new("editbone.constraint_add_with_targets", "C", "PRESS", ctrl=True, shift=True)
+    addon_keymaps.append((km, kmi))
+
+    # callbacks
+    bpy.app.handlers.frame_change_pre.append(evaluate_constraints)
+
 
 def unregister():
+    # unregister the classes
     for cls in classes_to_register:
         bpy.utils.unregister_class(cls)
+
+    # delete the edit bones property
     del bpy.types.EditBone.constraints
+
+    # handle the keymap
+    for keymap, keymap_item in addon_keymaps:
+        keymap.keymap_items.remove(keymap_item)
+    addon_keymaps.clear()
+
+    # callbacks
+    bpy.app.handlers.frame_change_pre.remove(evaluate_constraints)
