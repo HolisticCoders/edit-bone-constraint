@@ -9,7 +9,7 @@ class AddConstraintOperator(bpy.types.Operator):
     bl_property= "type"
 
     type: bpy.props.EnumProperty(
-        name="My Search",
+        name="Type",
         items=(
             ('CopyLocation', "Copy Location", ""),
             ('CopyRotation', "Copy Rotation", ""),
@@ -40,7 +40,7 @@ class AddConstraintWithTargetsOperator(bpy.types.Operator):
     bl_property= "type"
 
     type: bpy.props.EnumProperty(
-        name="My Search",
+        name="Type",
         items=(
             ('CopyLocation', "Copy Location", ""),
             ('CopyRotation', "Copy Rotation", ""),
