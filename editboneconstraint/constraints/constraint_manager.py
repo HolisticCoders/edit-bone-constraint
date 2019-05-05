@@ -28,3 +28,18 @@ class ConstraintManager:
             constraint = instanciate_constraint_from_property(constraint_prop)
             constraints.append(constraint)
         return constraints
+    
+    def move_constraint(self, constraint, direction):
+        constraint_index = self._bone.constraints.values.index(constraint)
+        constraint_count = len(self._bone.constraints.values)
+
+        if direction == 'UP' and constraint_index > 0:
+            new_index = constraint_index - 1
+        elif direction == 'DOWN' and constraint_index < constraint_count:
+            new_index = constraint_index + 1
+        
+        if new_index != constraint_index:
+            self._bone.constraints.move(constraint_index, new_index)
+    
+    def remove_constraint(self, constraint):
+        self._bone.constraints.remove(constraint.property)
