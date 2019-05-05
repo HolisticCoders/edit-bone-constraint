@@ -64,8 +64,7 @@ class AddConstraintWithTargetsOperator(bpy.types.Operator):
         constraint.target = target.name
         constraint.head_tail = 0.0
         constraint.influence = 1.0
-        constraint.offset = flatten_matrix(bone.matrix @ target.matrix.inverted())
-        print(constraint.offset)
+        constraint.offset = flatten_matrix(target.matrix.inverted() @ bone.matrix)
         return {"FINISHED"}
     
     def invoke(self, context, event):
