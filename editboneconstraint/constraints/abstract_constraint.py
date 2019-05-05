@@ -14,8 +14,6 @@ class AbstractConstraint(metaclass=abc.ABCMeta):
         self.head_tail = prop.head_tail
 
         self.offset = prop.offset
-        self.initial_matrix = prop.initial_matrix
-        self.initial_length = prop.initial_length
 
     @abc.abstractmethod
     def evaluate(self):
