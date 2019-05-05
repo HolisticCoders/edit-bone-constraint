@@ -27,7 +27,7 @@ from editboneconstraint.operators import (
 from editboneconstraint.constraints import instanciate_constraint_from_property
 from editboneconstraint.graph import sort_bones_by_constraints
 from editboneconstraint.properties import EditBoneConstraintProperty
-from .ui.constraint_stack import ConstraintStackPanel
+from editboneconstraint.ui import ConstraintStackPanel
 
 bl_info = {
     "name": "Edit Bone Constraints",
