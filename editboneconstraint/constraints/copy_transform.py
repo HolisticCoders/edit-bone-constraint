@@ -1,4 +1,4 @@
-from editboneconstraint.constraints.abstractconstraint import AbstractConstraint
+from editboneconstraint.constraints.abstract_constraint import AbstractConstraint
 import bpy
 
 
