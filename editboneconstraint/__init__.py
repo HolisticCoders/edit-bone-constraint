@@ -84,6 +84,12 @@ def register():
     bpy.types.EditBone.constraints = bpy.props.CollectionProperty(
         type=EditBoneConstraintProperty, name="Constraints"
     )
+    bpy.types.EditBone.initial_matrix = bpy.props.FloatVectorProperty(
+        name='Initial Matrix',
+        size=16,
+        subtype='MATRIX',
+    )
+    bpy.types.EditBone.initial_length = bpy.props.FloatProperty(name="Initial Length")
 
     # handle the keymap
     wm = bpy.context.window_manager
