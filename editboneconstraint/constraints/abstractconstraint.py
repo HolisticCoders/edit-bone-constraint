@@ -1,8 +1,9 @@
+import abc
 import bpy
 from mathutils import Matrix
 
 
-class AbstractConstraint:
+class AbstractConstraint(metaclass=abc.ABCMeta):
     def __init__(self, prop):
         self.property = prop
         self.armature = self.property.id_data
@@ -15,3 +16,8 @@ class AbstractConstraint:
         self.offset = prop.offset
         self.initial_matrix = prop.initial_matrix
         self.initial_length = prop.initial_length
+
+    @abc.abstractmethod
+    def evaluate(self):
+        """Return the computed matrix and length of the bone."""
+
