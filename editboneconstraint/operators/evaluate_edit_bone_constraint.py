@@ -1,7 +1,7 @@
 import bpy
 
 from editboneconstraint.graph import sort_bones_by_constraints
-from editboneconstraint.constraints import instanciate_constraint_from_property
+from editboneconstraint.constraints import ConstraintManager
 
 
 class EvaluateEditBoneConstraintsOperator(bpy.types.Operator):
@@ -16,9 +16,8 @@ class EvaluateEditBoneConstraintsOperator(bpy.types.Operator):
         armature = context.object.data
         sorted_bones = sort_bones_by_constraints(armature)
         for bone in sorted_bones:
-            for constraint_prop in bone.constraints:
-                constraint = instanciate_constraint_from_property(constraint_prop)
-                constraint.evaluate()
+            manager = ConstraintManager(bone)
+            manager.evaluate()
 
         # force a viewport refresh since some constraints evaluation do not trigger one
         bpy.context.area.tag_redraw()

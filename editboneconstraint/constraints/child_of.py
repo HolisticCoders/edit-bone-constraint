@@ -8,7 +8,7 @@ class ChildOf(AbstractConstraint):
         if not self.target:
             return
         new_mat = self.target.matrix @ self.offset
-        self.bone.matrix = new_mat
+        return new_mat, self.bone.length
 
 
 exported_constraints = [ChildOf]

@@ -14,6 +14,6 @@ class CopyLocation(AbstractConstraint):
 
         bone_mat = self.bone.matrix.copy()
         bone_mat.translation = new_mat.to_translation()
-        self.bone.matrix = bone_mat
+        return bone_mat, self.bone.length
 
 exported_constraints = [CopyLocation]

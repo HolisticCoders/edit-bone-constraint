@@ -24,7 +24,10 @@ from editboneconstraint.operators import (
     ClearConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
 )
-from editboneconstraint.constraints import instanciate_constraint_from_property
+from editboneconstraint.constraints import (
+    instanciate_constraint_from_property,
+    ConstraintManager,
+)
 from editboneconstraint.graph import sort_bones_by_constraints
 from editboneconstraint.properties import EditBoneConstraintProperty
 from editboneconstraint.ui import ConstraintStackPanel
@@ -69,9 +72,8 @@ def evaluate_constraints(*args):
         armature = bpy.context.object.data
         sorted_bones = sort_bones_by_constraints(armature)
         for bone in sorted_bones:
-            for constraint_prop in bone.constraints:
-                constraint = instanciate_constraint_from_property(constraint_prop)
-                constraint.evaluate()
+            manager = ConstraintManager(bone)
+            manager.evaluate()
 
 
 def register():
