@@ -1,7 +1,7 @@
 import bpy
 
 
-class ClearConstraintOperator(bpy.types.Operator):
+class ClearConstraintsOperator(bpy.types.Operator):
     bl_idname = "editbone.clear_edit_bone_constraints"
     bl_label = "Clear Edit Bone Constraint"
 

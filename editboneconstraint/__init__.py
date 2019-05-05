@@ -21,7 +21,7 @@ import bpy
 from editboneconstraint.operators import (
     AddConstraintOperator,
     AddConstraintWithTargetsOperator,
-    ClearConstraintOperator,
+    ClearConstraintsOperator,
     EvaluateEditBoneConstraintsOperator,
 )
 from editboneconstraint.constraints import (
@@ -51,7 +51,7 @@ classes_to_register = [
     # operators
     AddConstraintOperator,
     AddConstraintWithTargetsOperator,
-    ClearConstraintOperator,
+    ClearConstraintsOperator,
     EvaluateEditBoneConstraintsOperator,
 
     # ui
