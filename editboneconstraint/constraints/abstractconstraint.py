@@ -10,5 +10,8 @@ class AbstractConstraint:
         self.bone = self.armature.edit_bones[prop.bone]
         self.target = self.armature.edit_bones[prop.target]
         self.influence = prop.influence
-        self.offset = prop.offset
         self.head_tail = prop.head_tail
+
+        self.offset = prop.offset
+        self.initial_matrix = prop.initial_matrix
+        self.initial_length = prop.initial_length
