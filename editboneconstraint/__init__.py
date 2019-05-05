@@ -22,7 +22,10 @@ from editboneconstraint.operators import (
     AddConstraintOperator,
     AddConstraintWithTargetsOperator,
     ClearConstraintsOperator,
+    DeleteConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
+    MoveConstraintDownOperator,
+    MoveConstraintUpOperator,
 )
 from editboneconstraint.constraints import (
     instanciate_constraint_from_property,
@@ -52,7 +55,11 @@ classes_to_register = [
     AddConstraintOperator,
     AddConstraintWithTargetsOperator,
     ClearConstraintsOperator,
+    DeleteConstraintOperator,
     EvaluateEditBoneConstraintsOperator,
+    MoveConstraintDownOperator,
+    MoveConstraintUpOperator,
+
 
     # ui
     ConstraintStackPanel,
