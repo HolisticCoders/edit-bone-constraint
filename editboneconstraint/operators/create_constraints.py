@@ -61,11 +61,13 @@ class AddConstraintWithTargetsOperator(AddConstraintOperator):
         return len(context.selected_editable_bones) >= 2
 
     def execute(self, context):
-        bone = context.selected_editable_bones[1]
-        constraint = self._create_constraint_on_bone(bone)
-        target = context.selected_editable_bones[0]
-        constraint.target = target.name
-        constraint.offset = flatten_matrix(target.matrix.inverted() @ bone.matrix)
+        bone = context.active_bone
+        targets = context.selected_editable_bones
+        targets.remove(bone)
+        for target in targets:
+            constraint = self._create_constraint_on_bone(bone)
+            constraint.target = target.name
+            constraint.offset = flatten_matrix(target.matrix.inverted() @ bone.matrix)
         return {"FINISHED"}
 
     def invoke(self, context, event):
