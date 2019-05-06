@@ -18,9 +18,8 @@ class ConstraintManager:
             constraint_matrix, constraint_length = constraint.evaluate()
             new_matrix = new_matrix.lerp(constraint_matrix, constraint.influence)
             new_length = lerp(new_length, constraint_length, constraint.influence)
-
-        self._bone.matrix = new_matrix
-        self._bone.length = new_length
+            self._bone.matrix = new_matrix
+            self._bone.length = new_length
 
     def _instantiate_constraints(self):
         constraints = []
