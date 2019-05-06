@@ -38,7 +38,6 @@ class MoveConstraintDownOperator(BaseMoveConstraint):
                     new_index = constraint_count - 1
                 else:
                     new_index = constraint_index + 1
-                print(new_index)
                 bone.constraints.move(constraint_index, new_index)
 
         return {"FINISHED"}
