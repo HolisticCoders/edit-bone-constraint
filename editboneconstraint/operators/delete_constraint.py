@@ -1,7 +1,8 @@
 import bpy
+from .base_bone_operator import BaseBoneOperator
 
 
-class DeleteConstraintOperator(bpy.types.Operator):
+class DeleteConstraintOperator(bpy.types.Operator, BaseBoneOperator):
     bl_idname = "editbone.delete_constraint"
     bl_label = "Delete Constraint"
     bl_options = {"INTERNAL", "UNDO"}

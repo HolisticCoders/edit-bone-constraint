@@ -1,32 +1,19 @@
 import bpy
+from .base_bone_operator import BaseBoneOperator
 
-class BaseMoveConstraint(bpy.types.Operator):
-    bl_idname = "editbone.base_move_constraint_down"
-    bl_label = "Move Constraint Down"
-    bl_options = {"INTERNAL", "UNDO"}
+class BaseMoveConstraintOperator(BaseBoneOperator):
+    def execute(self, context):
+        return {"FINISHED"}
 
-    bone_name: bpy.props.StringProperty()
-    constraint_name: bpy.props.StringProperty()
-
-    @property
-    def bone(self):
-        if self.bone_name:
-            armature = bpy.context.active_object.data
-            return armature.edit_bones[self.bone_name]
-    
     def invoke(self, context, event):
         self.is_shift_pressed = event.shift
         self.execute(context)
         return {"RUNNING_MODAL"}
 
 
-class MoveConstraintDownOperator(BaseMoveConstraint):
+class MoveConstraintDownOperator(bpy.types.Operator, BaseMoveConstraintOperator):
     bl_idname = "editbone.move_constraint_down"
     bl_label = "Move Constraint Down"
-    bl_options = {"INTERNAL", "UNDO"}
-
-    bone_name: bpy.props.StringProperty()
-    constraint_name: bpy.props.StringProperty()
 
     def execute(self, context):
         bone = self.bone
@@ -43,13 +30,9 @@ class MoveConstraintDownOperator(BaseMoveConstraint):
         return {"FINISHED"}
 
 
-class MoveConstraintUpOperator(BaseMoveConstraint):
+class MoveConstraintUpOperator(bpy.types.Operator, BaseMoveConstraintOperator):
     bl_idname = "editbone.move_constraint_up"
     bl_label = "Move Constraint Up"
-    bl_options = {"INTERNAL", "UNDO"}
-
-    bone_name: bpy.props.StringProperty()
-    constraint_name: bpy.props.StringProperty()
 
     def execute(self, context):
         bone = self.bone

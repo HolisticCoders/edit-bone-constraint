@@ -1,39 +1,22 @@
 import bpy
 from mathutils import Matrix
 from editboneconstraint.utils import flatten_matrix
+from .base_bone_operator import BaseBoneOperator
 
 
-# HACK: it seems properties are not properly inherited,
-# so we declare it once here and assign it to both classes.
-constraint_types = bpy.props.EnumProperty(
-    name="Type",
-    items=(
-        ('CopyLocation', "Copy Location", ""),
-        ('CopyRotation', "Copy Rotation", ""),
-        ('CopyScale', "Copy Scale", ""),
-        ('CopyTransform', "Copy Transform", ""),
-        ('ChildOf', "Child Of", ""),
-    ),
-)
-
-
-
-class AddConstraintOperator(bpy.types.Operator):
-    bl_idname = "editbone.constraint_add"
-    bl_label = "Add Edit Bone Constraint"
+class BaseAddConstraint:
+    bl_options = {"UNDO"}
     bl_property = "type"
-    bl_options = {'UNDO'}
-
-    type: constraint_types
-
-    @classmethod
-    def poll(cls, context):
-        return bool(context.active_bone)
-
-    def execute(self, context):
-        bone = context.active_bone
-        self._create_constraint_on_bone(bone)
-        return {"FINISHED"}
+    type: bpy.props.EnumProperty(
+        name="Type",
+        items=(
+            ("CopyLocation", "Copy Location", ""),
+            ("CopyRotation", "Copy Rotation", ""),
+            ("CopyScale", "Copy Scale", ""),
+            ("CopyTransform", "Copy Transform", ""),
+            ("ChildOf", "Child Of", ""),
+        ),
+    )
 
     def _create_constraint_on_bone(self, bone):
         is_first_constraint = not bone.constraints.values()
@@ -50,12 +33,29 @@ class AddConstraintOperator(bpy.types.Operator):
 
         return constraint
 
+    def invoke(self, context, event):
+        context.window_manager.invoke_search_popup(self)
+        return {"FINISHED"}
 
-class AddConstraintWithTargetsOperator(AddConstraintOperator):
+
+
+class AddConstraintOperator(bpy.types.Operator, BaseAddConstraint):
+    bl_idname = "editbone.constraint_add"
+    bl_label = "Add Edit Bone Constraint"
+
+    @classmethod
+    def poll(cls, context):
+        return bool(context.active_bone)
+
+    def execute(self, context):
+        bone = context.active_bone
+        self._create_constraint_on_bone(bone)
+        return {"FINISHED"}
+
+
+class AddConstraintWithTargetsOperator(bpy.types.Operator, BaseAddConstraint):
     bl_idname = "editbone.constraint_add_with_targets"
     bl_label = "Add Edit Bone Constraint (With Targets)"
-
-    type: constraint_types
 
     @classmethod
     def poll(cls, context):
@@ -71,6 +71,3 @@ class AddConstraintWithTargetsOperator(AddConstraintOperator):
             constraint.offset = flatten_matrix(target.matrix.inverted() @ bone.matrix)
         return {"FINISHED"}
 
-    def invoke(self, context, event):
-        context.window_manager.invoke_search_popup(self)
-        return {'RUNNING_MODAL'}
