@@ -22,7 +22,7 @@ Edit Bone Constraint is a Blender 2.80+ addon that lets you add constraints from
 - Find a way to reference the bones directly rather than storing their names in StringProperty.
 - Better cycles detection in the evaluation of the constraints graph.
 
-### A few things to note:
+### A few random things to note:
 - This will _not_ slow down your rigs at all. The evaluation of the rig and the evaluation of the constraints are absolutely not related. (we made our own very simple dependency graph, dedicated to the edit mode of the armatures)
 - The evaluation can for now either:
   - Be triggered manually
