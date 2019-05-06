@@ -4,10 +4,10 @@ import bpy
 
 class CopyScale(AbstractConstraint):
 
-    def evaluate(self):
+    def evaluate(self, matrix_before, length_before):
         if not self.target:
             return
-        return self.bone.matrix, self.target.length
+        return matrix_before, self.target.length
 
 
 exported_constraints = [CopyScale]
