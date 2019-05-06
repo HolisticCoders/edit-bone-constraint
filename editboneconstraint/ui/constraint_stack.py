@@ -25,8 +25,13 @@ class ConstraintStackPanel(bpy.types.Panel):
         layout = self.layout
         box = layout.box()
 
-        # HEADER
-        row = box.row()
+        self.header_template(context, constraint, index, box)
+
+        if constraint.show_expanded:
+            self.body_template(context, constraint, box)
+
+    def header_template(self, context, constraint, index, layout):
+        row = layout.row()
 
         col = row.column()
         if constraint.show_expanded:
@@ -85,15 +90,17 @@ class ConstraintStackPanel(bpy.types.Panel):
         operator.constraint_name = constraint.name
         operator.bone_name = constraint.bone
 
+    def body_template(self, context, constraint, layout):
+        row = layout.row()
+        row.prop_search(constraint, "target", context.object.data, "edit_bones")
 
-        if constraint.show_expanded:
-            # BODY
-            row = box.row()
-            row.prop_search(constraint, "target", context.object.data, "edit_bones")
+        if constraint.type == 'CopyLocation':
+            self.copy_location_template(constraint, layout)
 
-            row = box.row()
-            row.label(text="Head/Tail:")
-            row.prop(constraint, "head_tail", text="", slider=True)
+        row = layout.row()
+        row.prop(constraint, "influence", slider=True)
 
-            row = box.row()
-            row.prop(constraint, "influence", slider=True)
+    def copy_location_template(self, constraint, layout):
+        row = layout.row()
+        row.label(text="Head/Tail:")
+        row.prop(constraint, "head_tail", text="", slider=True)
