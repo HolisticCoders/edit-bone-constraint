@@ -3,8 +3,7 @@ import bpy
 
 class MoveConstraintDownOperator(bpy.types.Operator):
     bl_idname = "editbone.move_constraint_down"
-    bl_label = "Delete Constraint"
-    bl_options = {"INTERNAL"}
+    bl_options = {"INTERNAL", "UNDO"}
 
     def execute(self, context):
         print("Moving Constraint Down")
@@ -13,8 +12,7 @@ class MoveConstraintDownOperator(bpy.types.Operator):
 
 class MoveConstraintUpOperator(bpy.types.Operator):
     bl_idname = "editbone.move_constraint_up"
-    bl_label = "Delete Constraint"
-    bl_options = {"INTERNAL"}
+    bl_options = {"INTERNAL", "UNDO"}
 
     def execute(self, context):
         print("Moving Constraint Up")

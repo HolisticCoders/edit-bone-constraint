@@ -22,6 +22,7 @@ class AddConstraintOperator(bpy.types.Operator):
     bl_idname = "editbone.constraint_add"
     bl_label = "Add Edit Bone Constraint"
     bl_property = "type"
+    bl_options = {'UNDO'}
 
     type: constraint_types
 
