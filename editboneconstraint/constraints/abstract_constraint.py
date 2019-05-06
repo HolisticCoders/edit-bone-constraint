@@ -12,7 +12,7 @@ class AbstractConstraint(metaclass=abc.ABCMeta):
         self.target = self.armature.edit_bones[prop.target]
         self.influence = prop.influence
         self.head_tail = prop.head_tail
-
+        self.mute = prop.mute
         self.offset = prop.offset
 
     @abc.abstractmethod

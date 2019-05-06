@@ -15,9 +15,10 @@ class ConstraintManager:
         new_matrix = self._bone.initial_matrix
         new_length = self._bone.initial_length
         for constraint in constraints:
-            constraint_matrix, constraint_length = constraint.evaluate()
-            new_matrix = new_matrix.lerp(constraint_matrix, constraint.influence)
-            new_length = lerp(new_length, constraint_length, constraint.influence)
+            if not constraint.mute:
+                constraint_matrix, constraint_length = constraint.evaluate()
+                new_matrix = new_matrix.lerp(constraint_matrix, constraint.influence)
+                new_length = lerp(new_length, constraint_length, constraint.influence)
             self._bone.matrix = new_matrix
             self._bone.length = new_length
 
