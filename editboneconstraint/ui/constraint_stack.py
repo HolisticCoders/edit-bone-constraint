@@ -64,16 +64,27 @@ class ConstraintStackPanel(bpy.types.Panel):
             col = row.column()
             reorder_row = col.row(align=True)
             if index == 0:
-                reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
+                operator = reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
+                operator.constraint_name = constraint.name
+                operator.bone_name = constraint.bone
             elif index == len(context.active_bone.constraints) - 1:
-                reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+                operator = reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+                operator.constraint_name = constraint.name
+                operator.bone_name = constraint.bone
             else:
-                reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
-                reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+                operator = reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
+                operator.constraint_name = constraint.name
+                operator.bone_name = constraint.bone
+                operator = reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+                operator.constraint_name = constraint.name
+                operator.bone_name = constraint.bone
 
 
         col = row.column()
-        col.operator("editbone.delete_constraint", text="", icon="X", emboss=False)
+        operator = col.operator("editbone.delete_constraint", text="", icon="X", emboss=False)
+        operator.constraint_name = constraint.name
+        operator.bone_name = constraint.bone
+
 
         if constraint.show_expanded:
             # BODY

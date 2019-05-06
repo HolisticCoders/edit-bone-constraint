@@ -42,9 +42,9 @@ class AddConstraintOperator(bpy.types.Operator):
             bone.initial_length = bone.length
 
         constraint = bone.constraints.add()
+        constraint.bone = bone.name
         constraint.name = self.type
         constraint.type = self.type
-        constraint.bone = bone.name
         constraint.head_tail = 0.0
         constraint.influence = 1.0
 
