@@ -4,7 +4,7 @@ from editboneconstraint.constraints import ConstraintManager
 
 
 def evaluate_graph():
-    active_object = bpy.data.scenes[0].view_layers[0].objects.active
+    active_object = bpy.context.view_layer.objects.active
     if (
         active_object
         and active_object.type == "ARMATURE"
