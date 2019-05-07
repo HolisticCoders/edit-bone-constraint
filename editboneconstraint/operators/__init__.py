@@ -3,6 +3,7 @@ from .reorder_constraint import MoveConstraintDownOperator, MoveConstraintUpOper
 from .clear_constraints import ClearConstraintsOperator
 from .delete_constraint import DeleteConstraintOperator
 from .evaluate_edit_bone_constraint import EvaluateEditBoneConstraintsOperator
+from .auto_evaluation import DisableAutoEvaluationOperator, EnableAutoEvaluationOperator
 
 
 __all__ = [
@@ -11,6 +12,8 @@ __all__ = [
     "ClearConstraintsOperator",
     "DeleteConstraintOperator",
     "EvaluateEditBoneConstraintsOperator",
-    'MoveConstraintDownOperator',
-    'MoveConstraintUpOperator',
+    "MoveConstraintDownOperator",
+    "MoveConstraintUpOperator",
+    "DisableAutoEvaluationOperator",
+    "EnableAutoEvaluationOperator",
 ]
