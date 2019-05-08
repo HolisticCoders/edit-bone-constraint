@@ -7,7 +7,7 @@ class EditBoneConstraintAddonPreferences(bpy.types.AddonPreferences):
     auto_evaluation: bpy.props.BoolProperty(name="Auto Evaluation", default=True)
     auto_evaluation_timer: bpy.props.FloatProperty(
         name="Auto Evaluation Timer (In Seconds)",
-        default=0.033,
+        default=0.016,
         description="Time between two evaluations of the edit bones constraint graph in seconds.\n"
         "The lower the value, the more evaluations per second (eps).\n"
         "0.033 = 30eps.\n"
