@@ -1,4 +1,5 @@
 import abc
+
 import bpy
 from mathutils import Matrix
 
@@ -19,3 +20,6 @@ class AbstractConstraint(metaclass=abc.ABCMeta):
     def evaluate(self):
         """Return the computed matrix and length of the bone."""
 
+    def get_target_matrix(self):
+        """Return the matrix of the target bone with the scale component."""
+        return self.target.matrix.copy() @ Matrix.Scale(self.target.length, 4)

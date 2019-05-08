@@ -4,7 +4,7 @@ from mathutils import Matrix
 
 
 class CopyLocation(AbstractConstraint):
-    def evaluate(self, matrix_before, length_before):
+    def evaluate(self, matrix_before):
         if not self.target:
             return
 
@@ -14,6 +14,7 @@ class CopyLocation(AbstractConstraint):
 
         bone_mat = matrix_before.copy()
         bone_mat.translation = new_mat.to_translation()
-        return bone_mat, length_before
+        return bone_mat
+
 
 exported_constraints = [CopyLocation]

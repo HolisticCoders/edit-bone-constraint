@@ -3,7 +3,6 @@ from .constraint_from_property import instanciate_constraint_from_property
 
 
 class ConstraintManager:
-
     def __init__(self, bone):
         self._bone = bone
 
@@ -13,14 +12,14 @@ class ConstraintManager:
             return
 
         new_matrix = self._bone.initial_matrix
-        new_length = self._bone.initial_length
         for constraint in constraints:
             if not constraint.mute:
-                constraint_matrix, constraint_length = constraint.evaluate(new_matrix, new_length)
+                constraint_matrix = constraint.evaluate(new_matrix)
                 new_matrix = new_matrix.lerp(constraint_matrix, constraint.influence)
-                new_length = lerp(new_length, constraint_length, constraint.influence)
+
         self._bone.matrix = new_matrix
-        self._bone.length = new_length
+        extracted_length = new_matrix.to_scale()[0]
+        self._bone.length = extracted_length
 
     def _instantiate_constraints(self):
         constraints = []

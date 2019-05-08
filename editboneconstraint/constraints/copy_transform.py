@@ -3,11 +3,10 @@ import bpy
 
 
 class CopyTransform(AbstractConstraint):
-
-    def evaluate(self, matrix_before, length_before):
+    def evaluate(self, matrix_before):
         if not self.target:
             return
-        return self.target.matrix.copy(), self.target.length
+        return self.get_target_matrix()
 
 
 exported_constraints = [CopyTransform]
