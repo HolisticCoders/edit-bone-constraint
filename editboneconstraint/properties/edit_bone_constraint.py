@@ -2,7 +2,7 @@ import bpy
 import re
 
 
-unique_names = ['name']
+unique_names = ["name"]
 
 
 class EditBoneConstraintProperty(bpy.types.PropertyGroup):
@@ -16,10 +16,9 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
     offset: bpy.props.FloatVectorProperty(name="Offset", size=16, subtype="MATRIX")
 
     def __setattr__(self, name, value):
-
         def new_val(stem, nbr):
             # simply for formatting
-            return '{st}.{nbr:03d}'.format(st=stem, nbr=nbr)
+            return "{st}.{nbr:03d}".format(st=stem, nbr=nbr)
 
         if name not in unique_names:
             # don't want to handle
@@ -38,7 +37,7 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
             return
 
         # see if value is already in a format like 'name.012'
-        match = re.match('(.*)\.(\d{3,})', value)
+        match = re.match("(.*)\.(\d{3,})", value)
         if match is None:
             stem, nbr = value, 1
         else:

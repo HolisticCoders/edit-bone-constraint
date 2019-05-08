@@ -38,7 +38,6 @@ class BaseAddConstraint:
         return {"FINISHED"}
 
 
-
 class AddConstraintOperator(bpy.types.Operator, BaseAddConstraint):
     bl_idname = "editbone.constraint_add"
     bl_label = "Add Edit Bone Constraint"
@@ -68,6 +67,14 @@ class AddConstraintWithTargetsOperator(bpy.types.Operator, BaseAddConstraint):
         for target in targets:
             constraint = self._create_constraint_on_bone(bone)
             constraint.target = target.name
-            constraint.offset = flatten_matrix(target.matrix.inverted() @ bone.matrix)
-        return {"FINISHED"}
 
+            target_mat_with_scale = target.matrix.copy() @ Matrix.Scale(
+                target.length, 4
+            )
+            bone_mat_with_scale = bone.matrix.copy() @ Matrix.Scale(bone.length, 4)
+
+            constraint.offset = flatten_matrix(
+                target_mat_with_scale.inverted() @ bone_mat_with_scale
+            )
+
+        return {"FINISHED"}
