@@ -16,19 +16,17 @@ Edit Bone Constraint is a Blender 2.80+ addon that lets you add constraints from
 
 ### TODO
 - New Constraints:
-  - Track To (aim constraint)
+  - Track To (aim constraint).
   - Pole vector (used to automatically place pole vectors based on a chain of bones)
+  - Python constraint that lets you run an arbitrary script.
 - More options for the constraints (copy the location on only a specific axis for example)
 - Find a way to reference the bones directly rather than storing their names in StringProperty.
 - Better cycles detection in the evaluation of the constraints graph.
 
 ### A few random things to note:
 - This will _not_ slow down your rigs at all. The evaluation of the rig and the evaluation of the constraints are absolutely not related. (we made our own very simple dependency graph, dedicated to the edit mode of the armatures)
-- The evaluation can for now either:
-  - Be triggered manually
-  - Be triggered on frame changed
-  We need a better alternative in the future but this gets the job done for now.
+- The evaluation is by default ran 30 times a second, you can change this in the addon preferences and even disable the auto evaluation. If you do so, you have an operator that you can call to evaluate the graph manually (search "Evaluate Edit Bone Constraints")
 - The constraints will _not_ be evaluated if a cycle is detected.
-- The cycles are detected on a bone-level for now meaning that `bone1 > copy location > bone2 > copy rotation > bone 1` will be considered as a cycle. This will probably change in the future
-- The scaling part of the constraints can behave a bit awkwardly for now as edit bones don't really have a scale but rather a distance between their head and tail.
+- The cycles are detected on a bone-level for now meaning that `bone1 > copy location > bone2 > copy rotation > bone1` will be considered as a cycle. This will probably change in the future
+- The scaling part of the constraints can behave a bit awkwardly for now as edit bones don't really have a scale but rather a distance between their head and tail (Meaning we don't handle negative scaling well).
 - Renaming a bone will break the constraints it owns and the constraints in which it is a target.
