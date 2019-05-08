@@ -2,9 +2,9 @@ import bpy
 
 
 class ClearConstraintsOperator(bpy.types.Operator):
-    bl_idname = "editbone.clear_edit_bone_constraints"
-    bl_label = "Clear Edit Bone Constraint"
-    bl_options = {'UNDO'}
+    bl_idname = "editbone.clear_constraints"
+    bl_label = "Clear Edit Bone Constraints"
+    bl_options = {"UNDO"}
 
     @classmethod
     def poll(cls, context):

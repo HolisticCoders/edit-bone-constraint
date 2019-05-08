@@ -93,6 +93,10 @@ def register():
         "editbone.constraint_add_with_targets", "C", "PRESS", ctrl=True, shift=True
     )
     addon_keymaps.append((km, kmi))
+    kmi = km.keymap_items.new(
+        "editbone.clear_constraints", "C", "PRESS", ctrl=True, alt=True
+    )
+    addon_keymaps.append((km, kmi))
 
     # Timers
     if not timers.is_registered(auto_evaluate_timer):
