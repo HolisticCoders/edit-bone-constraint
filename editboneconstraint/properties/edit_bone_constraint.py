@@ -1,54 +1,41 @@
 import bpy
 import re
+from uuid import uuid4
+from editboneconstraint.bone_mapping import BoneMapping
 
 
-unique_names = ["name"]
+def get_target(self):
+    armature = self.id_data
+    target_id = self.target_id
+
+    bone = BoneMapping().bone_from_uuid(armature, target_id)
+    if bone:
+        return bone.name
+    return None
+
+
+def set_target(self, value):
+    armature = self.id_data
+    target = armature.edit_bones[value]
+
+    uuid = target.editboneconstraint.uuid
+    if not uuid:
+        uuid = BoneMapping().register_bone(armature, target)
+
+    self["target_id"] = uuid
+    self["target"] = value
 
 
 class EditBoneConstraintProperty(bpy.types.PropertyGroup):
     type: bpy.props.StringProperty(name="Type")
-    target: bpy.props.StringProperty(name="Target")
+    target: bpy.props.StringProperty(name="Target", get=get_target, set=set_target)
+    target_id: bpy.props.StringProperty(name="Target ID")
     bone: bpy.props.StringProperty(name="Bone")
     influence: bpy.props.FloatProperty(name="Influence", default=1.0, min=0.0, max=1.0)
     mute: bpy.props.BoolProperty(name="Mute", default=False)
     show_expanded: bpy.props.BoolProperty(name="Show Expanded", default=True)
     head_tail: bpy.props.FloatProperty(name="Head/Tail", default=0.0, min=0.0, max=1.0)
     offset: bpy.props.FloatVectorProperty(name="Offset", size=16, subtype="MATRIX")
-
-    def __setattr__(self, name, value):
-        def new_val(stem, nbr):
-            # simply for formatting
-            return "{st}.{nbr:03d}".format(st=stem, nbr=nbr)
-
-        if name not in unique_names:
-            # don't want to handle
-            self[name] = value
-            return
-        if value == getattr(self, name):
-            # check for assignement of current value
-            return
-
-        armature = self.id_data
-        bone = armature.edit_bones[self.bone]
-        coll = bone.editboneconstraint.constraints
-        if value not in coll:
-            # if value is not in the collection, just assign
-            self[name] = value
-            return
-
-        # see if value is already in a format like 'name.012'
-        match = re.match("(.*)\.(\d{3,})", value)
-        if match is None:
-            stem, nbr = value, 1
-        else:
-            stem, nbr = match.groups()
-
-        # check for each value if in collection
-        new_value = new_val(stem, nbr)
-        while new_value in coll:
-            nbr += 1
-            new_value = new_val(stem, nbr)
-        self[name] = new_value
 
 
 class EditBoneConstraintProperties(bpy.types.PropertyGroup):
@@ -58,3 +45,4 @@ class EditBoneConstraintProperties(bpy.types.PropertyGroup):
     initial_matrix: bpy.props.FloatVectorProperty(
         name="Initial Matrix", size=16, subtype="MATRIX"
     )
+    uuid: bpy.props.StringProperty(name="UUID")
