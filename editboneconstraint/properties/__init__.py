@@ -1,6 +1,7 @@
-from .edit_bone_constraint import EditBoneConstraintProperty
+from .edit_bone_constraint import (
+    EditBoneConstraintProperty,
+    EditBoneConstraintProperties,
+)
 
 
-__all__ = [
-    'EditBoneConstraintProperty',
-]
+__all__ = ["EditBoneConstraintProperty", "EditBoneConstraintProperties"]

@@ -18,7 +18,7 @@ class DeleteConstraintOperator(bpy.types.Operator, BaseBoneOperator):
 
     def execute(self, context):
         bone = self.bone
-        constraint_index = bone.constraints.find(self.constraint_name)
+        constraint_index = bone.editboneconstraint.constraints.find(self.constraint_name)
         if bone and constraint_index != -1:
-            bone.constraints.remove(constraint_index)
+            bone.editboneconstraint.constraints.remove(constraint_index)
         return {"FINISHED"}

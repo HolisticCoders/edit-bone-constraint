@@ -18,7 +18,9 @@ class ConstraintStackPanel(bpy.types.Panel):
             "editbone.constraint_add", "type", text="Add Edit Bone Constraint"
         )
 
-        for i, constraint in enumerate(context.active_bone.constraints):
+        for i, constraint in enumerate(
+            context.active_bone.editboneconstraint.constraints
+        ):
             self.draw_constraint(context, constraint, i)
 
     def draw_constraint(self, context, constraint, index):
@@ -65,28 +67,37 @@ class ConstraintStackPanel(bpy.types.Panel):
         else:
             col.prop(constraint, "mute", icon="HIDE_OFF", icon_only=True, emboss=False)
 
-        if len(context.active_bone.constraints) > 1:
+        if len(context.active_bone.editboneconstraint.constraints) > 1:
             col = row.column()
             reorder_row = col.row(align=True)
             if index == 0:
-                operator = reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
+                operator = reorder_row.operator(
+                    "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
+                )
                 operator.constraint_name = constraint.name
                 operator.bone_name = constraint.bone
-            elif index == len(context.active_bone.constraints) - 1:
-                operator = reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+            elif index == len(context.active_bone.editboneconstraint.constraints) - 1:
+                operator = reorder_row.operator(
+                    "editbone.move_constraint_up", text="", icon="TRIA_UP"
+                )
                 operator.constraint_name = constraint.name
                 operator.bone_name = constraint.bone
             else:
-                operator = reorder_row.operator("editbone.move_constraint_down", text="", icon="TRIA_DOWN")
+                operator = reorder_row.operator(
+                    "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
+                )
                 operator.constraint_name = constraint.name
                 operator.bone_name = constraint.bone
-                operator = reorder_row.operator("editbone.move_constraint_up", text="", icon="TRIA_UP")
+                operator = reorder_row.operator(
+                    "editbone.move_constraint_up", text="", icon="TRIA_UP"
+                )
                 operator.constraint_name = constraint.name
                 operator.bone_name = constraint.bone
-
 
         col = row.column()
-        operator = col.operator("editbone.delete_constraint", text="", icon="X", emboss=False)
+        operator = col.operator(
+            "editbone.delete_constraint", text="", icon="X", emboss=False
+        )
         operator.constraint_name = constraint.name
         operator.bone_name = constraint.bone
 
@@ -94,7 +105,7 @@ class ConstraintStackPanel(bpy.types.Panel):
         row = layout.row()
         row.prop_search(constraint, "target", context.object.data, "edit_bones")
 
-        if constraint.type == 'CopyLocation':
+        if constraint.type == "CopyLocation":
             self.copy_location_template(constraint, layout)
 
         row = layout.row()

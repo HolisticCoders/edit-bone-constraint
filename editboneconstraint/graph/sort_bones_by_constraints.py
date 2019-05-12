@@ -6,7 +6,7 @@ def sort_bones_by_constraints(armature):
 
     bones = armature.edit_bones
     for bone in bones:
-        for constraint in bone.constraints:
+        for constraint in bone.editboneconstraint.constraints:
             target_name = constraint.target
             target = armature.edit_bones[target_name]
 

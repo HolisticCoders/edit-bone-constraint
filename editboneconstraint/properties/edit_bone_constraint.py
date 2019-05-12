@@ -30,7 +30,7 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
 
         armature = self.id_data
         bone = armature.edit_bones[self.bone]
-        coll = bone.constraints
+        coll = bone.editboneconstraint.constraints
         if value not in coll:
             # if value is not in the collection, just assign
             self[name] = value
@@ -49,3 +49,12 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
             nbr += 1
             new_value = new_val(stem, nbr)
         self[name] = new_value
+
+
+class EditBoneConstraintProperties(bpy.types.PropertyGroup):
+    constraints: bpy.props.CollectionProperty(
+        type=EditBoneConstraintProperty, name="Constraints"
+    )
+    initial_matrix: bpy.props.FloatVectorProperty(
+        name="Initial Matrix", size=16, subtype="MATRIX"
+    )

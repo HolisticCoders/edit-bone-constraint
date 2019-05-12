@@ -18,14 +18,14 @@ class MoveConstraintDownOperator(bpy.types.Operator, BaseMoveConstraintOperator)
     def execute(self, context):
         bone = self.bone
         if bone:
-            constraint_index = bone.constraints.find(self.constraint_name)
-            constraint_count = len(bone.constraints)
+            constraint_index = bone.editboneconstraint.constraints.find(self.constraint_name)
+            constraint_count = len(bone.editboneconstraint.constraints)
             if constraint_index != -1 and constraint_index < constraint_count - 1:
                 if self.is_shift_pressed:
                     new_index = constraint_count - 1
                 else:
                     new_index = constraint_index + 1
-                bone.constraints.move(constraint_index, new_index)
+                bone.editboneconstraint.constraints.move(constraint_index, new_index)
 
         return {"FINISHED"}
 
@@ -37,12 +37,12 @@ class MoveConstraintUpOperator(bpy.types.Operator, BaseMoveConstraintOperator):
     def execute(self, context):
         bone = self.bone
         if bone:
-            constraint_index = bone.constraints.find(self.constraint_name)
+            constraint_index = bone.editboneconstraint.constraints.find(self.constraint_name)
             if constraint_index != -1 and constraint_index > 0:
                 if self.is_shift_pressed:
                     new_index = 0 
                 else:
                     new_index = constraint_index - 1
-                bone.constraints.move(constraint_index, new_index)
+                bone.editboneconstraint.constraints.move(constraint_index, new_index)
 
         return {"FINISHED"}

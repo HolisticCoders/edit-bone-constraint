@@ -11,7 +11,7 @@ class ConstraintManager:
         if not constraints:
             return
 
-        new_matrix = self._bone.initial_matrix
+        new_matrix = self._bone.editboneconstraint.initial_matrix
         for constraint in constraints:
             if not constraint.mute:
                 constraint_matrix = constraint.evaluate(new_matrix)
@@ -23,7 +23,7 @@ class ConstraintManager:
 
     def _instantiate_constraints(self):
         constraints = []
-        for constraint_prop in self._bone.constraints:
+        for constraint_prop in self._bone.editboneconstraint.constraints:
             constraint = instanciate_constraint_from_property(constraint_prop)
             constraints.append(constraint)
         return constraints

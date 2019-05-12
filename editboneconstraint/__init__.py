@@ -44,13 +44,14 @@ from .operators import (
 )
 from .constraints import instanciate_constraint_from_property, ConstraintManager
 from .graph import sort_bones_by_constraints, auto_evaluate_timer
-from .properties import EditBoneConstraintProperty
+from .properties import EditBoneConstraintProperty, EditBoneConstraintProperties
 from .ui import ConstraintStackPanel
 from .preferences import EditBoneConstraintAddonPreferences
 
 classes_to_register = [
     # properties
     EditBoneConstraintProperty,
+    EditBoneConstraintProperties,
     # operators
     AddConstraintOperator,
     AddConstraintWithTargetsOperator,
@@ -78,13 +79,9 @@ def register():
         bpy.utils.register_class(cls)
 
     # add the property to the edit bones
-    bpy.types.EditBone.constraints = bpy.props.CollectionProperty(
-        type=EditBoneConstraintProperty, name="Constraints"
+    bpy.types.EditBone.editboneconstraint = bpy.props.PointerProperty(
+        type=EditBoneConstraintProperties, name="Edit Bone Constraint Properties"
     )
-    bpy.types.EditBone.initial_matrix = bpy.props.FloatVectorProperty(
-        name="Initial Matrix", size=16, subtype="MATRIX"
-    )
-    bpy.types.EditBone.initial_length = bpy.props.FloatProperty(name="Initial Length")
 
     # handle the keymap
     wm = bpy.context.window_manager
@@ -109,9 +106,7 @@ def unregister():
         bpy.utils.unregister_class(cls)
 
     # delete the edit bones property
-    del bpy.types.EditBone.constraints
-    del bpy.types.EditBone.initial_matrix
-    del bpy.types.EditBone.initial_length
+    del bpy.types.EditBone.editboneconstraint
 
     # handle the keymap
     for keymap, keymap_item in addon_keymaps:

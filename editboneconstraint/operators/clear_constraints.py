@@ -12,5 +12,5 @@ class ClearConstraintsOperator(bpy.types.Operator):
 
     def execute(self, context):
         for bone in context.selected_editable_bones:
-            bone.constraints.clear()
+            bone.editboneconstraint.constraints.clear()
         return {"FINISHED"}
