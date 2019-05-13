@@ -33,6 +33,7 @@ class ConstraintStackPanel(bpy.types.Panel):
             self.body_template(context, constraint, box)
 
     def header_template(self, context, constraint, index, layout):
+        bone = context.active_bone
         row = layout.row()
 
         col = row.column()
@@ -67,7 +68,7 @@ class ConstraintStackPanel(bpy.types.Panel):
         else:
             col.prop(constraint, "mute", icon="HIDE_OFF", icon_only=True, emboss=False)
 
-        if len(context.active_bone.editboneconstraint.constraints) > 1:
+        if len(bone.editboneconstraint.constraints) > 1:
             col = row.column()
             reorder_row = col.row(align=True)
             if index == 0:
@@ -75,31 +76,31 @@ class ConstraintStackPanel(bpy.types.Panel):
                     "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
             elif index == len(context.active_bone.editboneconstraint.constraints) - 1:
                 operator = reorder_row.operator(
                     "editbone.move_constraint_up", text="", icon="TRIA_UP"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
             else:
                 operator = reorder_row.operator(
                     "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
                 operator = reorder_row.operator(
                     "editbone.move_constraint_up", text="", icon="TRIA_UP"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
 
         col = row.column()
         operator = col.operator(
             "editbone.delete_constraint", text="", icon="X", emboss=False
         )
         operator.constraint_name = constraint.name
-        operator.bone_name = constraint.bone
+        operator.bone_name = bone.name
 
     def body_template(self, context, constraint, layout):
         row = layout.row()

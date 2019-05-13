@@ -8,8 +8,12 @@ class CopyScale(AbstractConstraint):
     def evaluate(self, matrix_before):
         if not self.target:
             return
-        new_mat = matrix_before @ Matrix.Scale(
-            self.get_target_matrix().to_scale()[0], 4
+        translation, rotation, scale = matrix_before.decompose()
+        axis_angle = rotation.to_axis_angle()
+        new_mat = (
+            Matrix.Translation(translation)
+            @ Matrix.Rotation(axis_angle[1], 4, axis_angle[0])
+            @ Matrix.Scale(self.get_target_matrix().to_scale()[0], 4)
         )
         return new_mat
 

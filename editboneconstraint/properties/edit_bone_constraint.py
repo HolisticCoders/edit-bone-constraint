@@ -41,7 +41,10 @@ class EditBoneConstraintProperties(bpy.types.PropertyGroup):
     constraints: bpy.props.CollectionProperty(
         type=EditBoneConstraintProperty, name="Constraints"
     )
-    initial_matrix: bpy.props.FloatVectorProperty(
-        name="Initial Matrix", size=16, subtype="MATRIX"
+    rest_matrix: bpy.props.FloatVectorProperty(
+        name="Rest Matrix", size=16, subtype="MATRIX"
+    )
+    previously_computed_matrix: bpy.props.FloatVectorProperty(
+        name="Previously Computed Matrix", size=16, subtype="MATRIX"
     )
     uuid: bpy.props.StringProperty(name="UUID")

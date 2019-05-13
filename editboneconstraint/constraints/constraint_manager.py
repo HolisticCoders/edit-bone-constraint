@@ -11,7 +11,17 @@ class ConstraintManager:
         if not constraints:
             return
 
-        new_matrix = self._bone.editboneconstraint.initial_matrix
+        # change the rest_matrix if the user has modified the bone's matrix since the last evaluation
+        rest_matrix = self._bone.editboneconstraint.rest_matrix
+        previously_computed_matrix = (
+            self._bone.editboneconstraint.previously_computed_matrix
+        )
+        current_matrix = self._bone.matrix @ Matrix.Scale(self._bone.length, 4)
+        if current_matrix != previously_computed_matrix:
+            self._bone.editboneconstraint.rest_matrix = flatten_matrix(current_matrix)
+            rest_matrix = current_matrix
+
+        new_matrix = rest_matrix
         for constraint in constraints:
             if not constraint.mute:
                 constraint_matrix = constraint.evaluate(new_matrix)
@@ -20,6 +30,10 @@ class ConstraintManager:
         self._bone.matrix = new_matrix
         extracted_length = new_matrix.to_scale()[0]
         self._bone.length = extracted_length
+
+        self._bone.editboneconstraint.previously_computed_matrix = flatten_matrix(
+            new_matrix
+        )
 
     def _instantiate_constraints(self):
         constraints = []

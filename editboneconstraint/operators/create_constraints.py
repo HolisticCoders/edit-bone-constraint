@@ -21,8 +21,8 @@ class BaseAddConstraint:
     def _create_constraint_on_bone(self, bone):
         is_first_constraint = not bone.editboneconstraint.constraints.values()
         if is_first_constraint:
-            initial_matrix = bone.matrix.copy() @ Matrix.Scale(bone.length, 4)
-            bone.editboneconstraint.initial_matrix = flatten_matrix(initial_matrix)
+            rest_matrix = bone.matrix.copy() @ Matrix.Scale(bone.length, 4)
+            bone.editboneconstraint.rest_matrix = flatten_matrix(rest_matrix)
 
         constraint = bone.editboneconstraint.constraints.add()
         constraint.bone = bone.name
