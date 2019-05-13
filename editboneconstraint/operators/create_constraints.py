@@ -71,10 +71,8 @@ class AddConstraintWithTargetsOperator(bpy.types.Operator, BaseAddConstraint):
             target_mat_with_scale = target.matrix.copy() @ Matrix.Scale(
                 target.length, 4
             )
-            bone_mat_with_scale = bone.matrix.copy() @ Matrix.Scale(bone.length, 4)
-
-            constraint.offset = flatten_matrix(
-                target_mat_with_scale.inverted() @ bone_mat_with_scale
+            constraint.target_inverse_matrix = flatten_matrix(
+                target_mat_with_scale.inverted()
             )
 
         return {"FINISHED"}

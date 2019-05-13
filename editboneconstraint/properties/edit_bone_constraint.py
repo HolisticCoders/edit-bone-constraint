@@ -35,6 +35,9 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
     show_expanded: bpy.props.BoolProperty(name="Show Expanded", default=True)
     head_tail: bpy.props.FloatProperty(name="Head/Tail", default=0.0, min=0.0, max=1.0)
     offset: bpy.props.FloatVectorProperty(name="Offset", size=16, subtype="MATRIX")
+    target_inverse_matrix: bpy.props.FloatVectorProperty(
+        name="Previously Computed Matrix", size=16, subtype="MATRIX"
+    )
 
 
 class EditBoneConstraintProperties(bpy.types.PropertyGroup):
