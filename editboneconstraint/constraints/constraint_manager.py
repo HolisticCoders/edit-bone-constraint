@@ -24,6 +24,8 @@ class ConstraintManager:
     def _instantiate_constraints(self):
         constraints = []
         for constraint_prop in self._bone.editboneconstraint.constraints:
-            constraint = instanciate_constraint_from_property(constraint_prop)
+            constraint = instanciate_constraint_from_property(
+                constraint_prop, self._bone
+            )
             constraints.append(constraint)
         return constraints
