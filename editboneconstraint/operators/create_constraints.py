@@ -25,7 +25,6 @@ class BaseAddConstraint:
             bone.editboneconstraint.initial_matrix = flatten_matrix(initial_matrix)
 
         constraint = bone.editboneconstraint.constraints.add()
-        constraint.bone = bone.name
         constraint.name = self.type
         constraint.type = self.type
         constraint.head_tail = 0.0
