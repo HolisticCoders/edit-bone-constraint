@@ -74,24 +74,24 @@ class ConstraintStackPanel(bpy.types.Panel):
                     "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = bone
+                operator.bone_name = bone.name
             elif index == len(bone.editboneconstraint.constraints) - 1:
                 operator = reorder_row.operator(
                     "editbone.move_constraint_up", text="", icon="TRIA_UP"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
             else:
                 operator = reorder_row.operator(
                     "editbone.move_constraint_down", text="", icon="TRIA_DOWN"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
                 operator = reorder_row.operator(
                     "editbone.move_constraint_up", text="", icon="TRIA_UP"
                 )
                 operator.constraint_name = constraint.name
-                operator.bone_name = constraint.bone
+                operator.bone_name = bone.name
 
         col = row.column()
         operator = col.operator(
