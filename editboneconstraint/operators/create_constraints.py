@@ -25,7 +25,6 @@ class BaseAddConstraint:
             bone.editboneconstraint.initial_matrix = flatten_matrix(initial_matrix)
 
         constraint = bone.editboneconstraint.constraints.add()
-        constraint.bone = bone.name
         constraint.name = self.type
         constraint.type = self.type
         constraint.head_tail = 0.0
@@ -61,10 +60,10 @@ class AddConstraintWithTargetsOperator(bpy.types.Operator, BaseAddConstraint):
         return len(context.selected_editable_bones) >= 2
 
     def execute(self, context):
-        bone = context.active_bone
-        targets = context.selected_editable_bones
-        targets.remove(bone)
-        for target in targets:
+        target = context.active_bone
+        bones = context.selected_editable_bones
+        bones.remove(target)
+        for bone in bones:
             constraint = self._create_constraint_on_bone(bone)
             constraint.target = target.name
 

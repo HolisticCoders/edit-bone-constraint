@@ -1,5 +1,6 @@
 from .abstract_constraint import AbstractConstraint
 import bpy
+from mathutils import Matrix
 
 
 class CopyRotation(AbstractConstraint):
@@ -7,7 +8,8 @@ class CopyRotation(AbstractConstraint):
         if not self.target:
             return
         # we can't directly change the bone's matrix's translation
-        new_mat = self.target.matrix.copy()
+        scale = matrix_before.to_scale()[0]
+        new_mat = self.target.matrix.copy() @ Matrix.Scale(scale, 4)
         new_mat.translation = matrix_before.to_translation()
         return new_mat
 
