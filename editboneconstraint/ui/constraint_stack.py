@@ -10,7 +10,11 @@ class ConstraintStackPanel(bpy.types.Panel):
 
     @classmethod
     def poll(cls, context):
-        return context.object.type == "ARMATURE" and context.object.mode == "EDIT"
+        return (
+            context.object.type == "ARMATURE"
+            and context.object.mode == "EDIT"
+            and context.active_bone
+        )
 
     def draw(self, context):
         layout = self.layout
