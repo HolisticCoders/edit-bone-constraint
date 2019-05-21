@@ -2,6 +2,7 @@ import bpy
 import logging
 from . import sort_bones_by_constraints
 from editboneconstraint.constraints import ConstraintManager
+import time
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +27,9 @@ def auto_evaluate_timer():
     prefs = bpy.context.preferences.addons[package_name].preferences
 
     try:
+        start_time = time.time()
         evaluate_graph()
+        logger.debug(f"Evaluation took {time.time() - start_time}s")
     except Exception as e:
         logger.error(e)
 
