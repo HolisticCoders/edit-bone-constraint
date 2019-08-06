@@ -14,6 +14,9 @@ class EditBoneConstraintProperty(bpy.types.PropertyGroup):
     show_expanded: bpy.props.BoolProperty(name="Show Expanded", default=True)
     head_tail: bpy.props.FloatProperty(name="Head/Tail", default=0.0, min=0.0, max=1.0)
     offset: bpy.props.FloatVectorProperty(name="Offset", size=16, subtype="MATRIX")
+    invert_x: bpy.props.BoolProperty(name="Invert X", default=False)
+    invert_y: bpy.props.BoolProperty(name="Invert Y", default=False)
+    invert_z: bpy.props.BoolProperty(name="Invert Z", default=False)
 
     # def __setattr__(self, name, value):
     #     def new_val(stem, nbr):

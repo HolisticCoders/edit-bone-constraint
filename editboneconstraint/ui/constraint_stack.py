@@ -118,3 +118,8 @@ class ConstraintStackPanel(bpy.types.Panel):
         row = layout.row()
         row.label(text="Head/Tail:")
         row.prop(constraint, "head_tail", text="", slider=True)
+
+        row = layout.row()
+        row.prop(constraint, "invert_x")
+        row.prop(constraint, "invert_y")
+        row.prop(constraint, "invert_z")

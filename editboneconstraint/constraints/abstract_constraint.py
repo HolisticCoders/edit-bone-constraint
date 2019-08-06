@@ -15,6 +15,9 @@ class AbstractConstraint(metaclass=abc.ABCMeta):
         self.head_tail = prop.head_tail
         self.mute = prop.mute
         self.offset = prop.offset
+        self.invert_x = prop.invert_x
+        self.invert_y = prop.invert_y
+        self.invert_z = prop.invert_z
 
     @abc.abstractmethod
     def evaluate(self):
